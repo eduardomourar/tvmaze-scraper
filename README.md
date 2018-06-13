@@ -38,13 +38,6 @@ Or, `npm run watch` for development mode.
 
 Finally, navigate to `http://localhost:3000` and you should see the initial message!
 
-# Deploying the app
-Azure cloud platform was used for the application deployment.
-
-## Services
-- [**Azure App Service for Windows**](https://azure.microsoft.com/en-us/services/app-service/)
-- [**Azure Redis Cache**](https://azure.microsoft.com/en-gb/services/cache/)
-
 # Usage
 
 The REST API has the following business requirements:
@@ -71,3 +64,10 @@ Example
 ```
 https://tvmaze-scraper.azurewebsites.net/shows?page=3&size=50
 ```
+
+# Deploying the app
+Azure cloud platform was used for the application deployment to production environment.
+
+## Services
+- [**Azure App Service for Windows**](https://azure.microsoft.com/en-us/services/app-service/)
+- [**Azure Redis Cache**](https://azure.microsoft.com/en-gb/services/cache/)
