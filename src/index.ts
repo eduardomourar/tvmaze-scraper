@@ -8,5 +8,6 @@ const port: string = process.env.PORT || '3000';
 initRoutes(app);
 
 app.listen(port, () => {
-    logger.info(`Application listening on port ${port}`);
+    logger.info(`-  Port    :  ${port}`);
+    logger.info('---------------------------------------------------');
 });

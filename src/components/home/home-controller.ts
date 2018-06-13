@@ -3,12 +3,16 @@ import { Controller } from '../controller';
 import * as scraper from './scraper';
 import logger from '../../util/logger';
 
+const info = require('../../../package.json');
+
 export default class HomeController implements Controller {
     private app: express.Application;
     private redis;
 
     constructor(app: express.Application, redis) {
-        logger.info('Initialized HomeController');
+        logger.info('---------------------------------------------------');
+        logger.info(`-  Eduardo Rodrigues (c) 2018 - ${info.description}`);
+        logger.info(`-  Release :  v${info.version}`);
         this.app = app;
         this.redis = redis;
         if (process.env.NODE_ENV === 'production') {
@@ -25,10 +29,7 @@ export default class HomeController implements Controller {
      * Scrape the data of shows from TVmaze.
      */
     private scrapeShows() {
-        return scraper.getShows()
-            .then((data) => {
-                return this.redis.addEntries('show', data);
-            })
+        return scraper.getShows(this.redis.addEntry)
             .then((data) => {
                 logger.log('Shows sucessfully retrieved.');
                 return data;
@@ -62,15 +63,9 @@ export default class HomeController implements Controller {
      * Initialize the routes which should be handled by this controller.
      */
     initRoutes() {
-        this.app.get('/', this.redis.route({
-            name: 'home',
-        }), (req, res) => {
+        this.app.get('/', (req, res) => {
             logger.info('GET home');
-            this.redis.get('home', (error, entries) => {
-                if ( error ) throw error;
-                entries.forEach(logger.log.bind(console));
-            });
-            res.json({ message: 'TVmaze scraper application is running.'});
+            res.json({ message: `TVmaze scraper application v${info.version} is running.`});
         });
 
         this.app.get('/clear', (req, res) => {

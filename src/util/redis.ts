@@ -21,22 +21,20 @@ redis.on('error', (error) => {
     logger.info('Redis error', error);
 });
 
-redis.addEntries = (prefix, entries) => {
-    return Promise.all((entries || []).map((entry, index) => {
-        const { id, name } = entry;
+redis.addEntry = (prefix, entry) => {
+    return new Promise((resolve, reject) => {
+        const { id = 0, name = '' } = entry || {};
         if (!id) {
-            logger.info(`Unable to add entry ${name} and index ${index}, ID not present.`);
-            return Promise.resolve({});
+            logger.info(`Unable to add entry ${name}, ID not present.`);
+            return resolve({});
         }
-        return new Promise((resolve, reject) => {
-            redis.add(`${prefix}${id}`, JSON.stringify(entry), { type: 'json' }, (error, added) => {
-                if (error) {
-                    return reject(error);
-                }
-                resolve(added);
-            });
+        redis.add(`${prefix}${id}`, JSON.stringify(entry), { type: 'json' }, (error, added) => {
+            if (error) {
+                return reject(error);
+            }
+            resolve(added);
         });
-    }));
+    });
 };
 
 redis.getEntries = (query) => {
