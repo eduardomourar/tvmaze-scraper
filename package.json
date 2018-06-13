@@ -1,0 +1,43 @@
+{
+  "name": "tvmaze-scraper",
+  "version": "1.0.0",
+  "description": "TVmaze Scraper",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eduardomourar/tvmaze-scraper"
+  },
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc && npm run tslint",
+    "watch-node": "nodemon dist/index.js",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
+    "test": "jest --forceExit --coverage --verbose",
+    "watch-test": "npm run test -- --watchAll",
+    "watch-ts": "tsc -w",
+    "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "debug": "npm run build && npm run watch-debug",
+    "serve-debug": "nodemon --inspect dist/index.js",
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
+  },
+  "author": "Eduardo Rodrigues",
+  "license": "MIT",
+  "dependencies": {
+    "del": "^3.0.0",
+    "express": "^4.16.3",
+    "express-redis-cache": "^1.1.1",
+    "fs-extra": "^6.0.1",
+    "isomorphic-fetch": "^2.2.1",
+    "promise-throttle": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "@types/isomorphic-fetch": "^0.0.34",
+    "@types/node": "^8.10.19",
+    "concurrently": "^3.5.1",
+    "nodemon": "^1.17.5",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.1"
+  }
+}
